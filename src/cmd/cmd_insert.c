@@ -4,9 +4,9 @@
 
 /**
  * @brief Writes the BMP file header to the output file stream.
- * Writes the BMP file header information, including the file type marker,
+ * This function writes the BMP file header information, including the file type marker,
  * file size, and image data offset, to the output file stream.
- * 
+ * -------------------------------------------------------------------------------------
  * @param fout The output file stream where the header will be written.
  * @param bmp  The BMP structure containing image information.
  * @return EXIT_SUCCESS if the header is successfully written, EXIT_FAILURE otherwise.
@@ -39,10 +39,10 @@ static u_int8_t _SAVE_HEADER(FILE *fout, BMP *bmp) {
 
 /**
  * @brief Writes the image data and padding to the output file stream.
- * Writes the image data and padding to the output file stream.
+ * This function writes the image data and padding to the output file stream.
  * It ensures that each row of image data is followed by the appropriate amount of padding
  * to align the data on a 4-byte boundary.
- * 
+ * ---------------------------------------------------------------------------------------
  * @param fout The output file stream where the image data will be written.
  * @param bmp  The BMP structure containing image information and data.
  * @return EXIT_SUCCESS if the image data is successfully written, EXIT_FAILURE otherwise.
@@ -74,9 +74,9 @@ static u_int8_t _SAVE_INFO(FILE *fout, BMP *bmp) {
 
 /**
  * @brief Saves the BMP image to a file.
- * Saves the BMP image represented by the BMP
+ * This function saves the BMP image represented by the BMP
  * structure to a file with the specified filename.
- * 
+ * --------------------------------------------------------------------------------
  * @param file The name of the file to save the image to.
  * @param bmp  The BMP structure containing the image data.
  * @return EXIT_SUCCESS if the image is successfully saved, EXIT_FAILURE otherwise.
@@ -110,15 +110,16 @@ u_int8_t SAVE(char *file, BMP *bmp) {
 
 /**
  * @brief Reads and validates the BMP file header during image editing.
- * Reads the BMP file header from the input file stream, validates it,
+ * This function reads the BMP file header from the input file stream, validates it,
  * and populates the BMP structure with the header information.
- * 
+ * ----------------------------------------------------------------------------------------------
  * @param fin The input file stream.
  * @param bmp The BMP structure to store header information.
  * @return EXIT_SUCCESS if the header is successfully read and validated, EXIT_FAILURE otherwise.
  */
 static u_int8_t _EDIT_HEADER(FILE *fin, BMP *bmp) {
     bmp_fileheader header;
+
     // Read the BMP file header from the input file stream.
     if (fread(&header, sizeof(header), 1, fin) != 1)
         return EXIT_FAILURE;
@@ -131,14 +132,15 @@ static u_int8_t _EDIT_HEADER(FILE *fin, BMP *bmp) {
     // Ensure that the BMP uses 24-bit color depth (SIZE_RGB).
     if (bmp->info.bit_pix != SIZE_RGB)
         return EXIT_FAILURE;
+
     return EXIT_SUCCESS;
 }
 
 /**
  * @brief Reads and populates the image data during image editing.
- * Reads and populates the image data from the input file stream,
+ * This function reads and populates the image data from the input file stream,
  * taking into account padding, and stores it in the BMP structure.
- * 
+ * -----------------------------------------------------------------------------------------------
  * @param fin The input file stream.
  * @param bmp The BMP structure to store the image data.
  * @return EXIT_SUCCESS if the image data is successfully read and stored, EXIT_FAILURE otherwise.
@@ -175,9 +177,9 @@ static u_int8_t _EDIT_INFO(FILE *fin, BMP *bmp) {
 
 /**
  * @brief Edits a BMP image by reading and updating its content from an input file.
- * Reads an input BMP file, validates and stores its contents in the
+ * This function reads an input BMP file, validates and stores its contents in the
  * provided BMP structure, effectively editing the image.
- * 
+ * -------------------------------------------------------------------------------
  * @param file The filename of the input BMP file.
  * @param bmp  The BMP structure to store the edited image.
  */
@@ -210,9 +212,9 @@ u_int8_t EDIT(char *file, BMP *bmp) {
 
 /**
  * @brief Reads and validates the BMP file header and information header from a file.
- * Reads and validates both the BMP file header and information header
+ * This function reads and validates both the BMP file header and information header
  * from the input file stream. It checks if the file signature and color depth are valid.
- * 
+ * ------------------------------------------------------------------------------------------------
  * @param fin    The input file stream.
  * @param header Pointer to a bmp_fileheader structure to store the file header.
  * @param info   Pointer to a bmp_infoheader structure to store the information header.
@@ -236,9 +238,9 @@ static u_int8_t _HEADER_INFO(FILE *fin, bmp_fileheader *header, bmp_infoheader *
 
 /**
  * @brief Reads image data and padding from a file and stores it in a buffer.
- * Reads image data and padding from the input file stream and stores
+ * This function reads image data and padding from the input file stream and stores
  * it in the provided image buffer. It correctly accounts for padding bytes in each row.
- * 
+ * -----------------------------------------------------------------------------------------------
  * @param fin     The input file stream.
  * @param img     Pointer to the image data buffer where the data will be stored.
  * @param _width  The width of the image.
@@ -271,9 +273,9 @@ static u_int8_t _READ_INFO(FILE *fin, char *img, int _width, int _height) {
 
 /**
  * @brief Copies image data from one buffer to another with specified offsets and dimensions.
- * Copies image data from one buffer to another, considering specified offsets
+ * This function copies image data from one buffer to another, considering specified offsets
  * and dimensions. It is used to insert one image into another at a given position.
- * 
+ * -----------------------------------------------------------------------------------------
  * @param bmp     The target BMP structure where the image data will be copied.
  * @param img     The source image data buffer to be copied, RGB pixels info.
  * @param y       The vertical position (row) where the insertion will start.
@@ -319,10 +321,10 @@ static u_int8_t _COPY_INFO(BMP *bmp, char *img, int y, int x, int _width, int _h
 
 /**
  * @brief Inserts an image into a BMP structure at a specified position.
- * Inserts an image from a file into a BMP structure at a specified position.
- * It reads the image data from the file, copies it into the BMP structure,
- * and adjusts the target position accordingly.
- * 
+ * This function inserts an image from a file into a BMP structure at a specified position.
+ * It reads the image data from the file, copies it into the BMP structure, and adjusts the
+ * target position accordingly.
+ * ----------------------------------------------------------------------------------------
  * @param file The filename of the image file to insert.
  * @param bmp  The target BMP structure where the image will be inserted.
  * @param y    The vertical position (row) where the insertion will start.
