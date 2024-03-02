@@ -25,10 +25,10 @@ u_int8_t DOT(BMP *bmp, int y1, int x1) {
     int Ej = min(bmp->info.width, y1 + half + 1);
 
     // Iterate through the rows and columns within the brush size.
-    for (int l = Si; l < Ei; l++) {
+    for (int i = Si; i < Ei; i++) {
         for (int j = Sj; j < Ej; j++) {
             // Calculate the index in the image data for the current pixel.
-            int ImgIdx = l * bmp->info.width * SIZE_COLOR + j * SIZE_COLOR;
+            int ImgIdx = i * bmp->info.width * SIZE_COLOR + j * SIZE_COLOR;
             // Copy the brush color to the current pixel in the image.
             memcpy(bmp->img + ImgIdx, bmp->brush_color, SIZE_COLOR);
         }
